@@ -1,4 +1,4 @@
-package com.aitbenmoumen.discoveryservice;
+package com.aitbenmoumen.discovery_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
