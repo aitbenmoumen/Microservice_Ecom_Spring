@@ -22,5 +22,4 @@ public class Bill {
     private List<ProductItem> productItems = new ArrayList<>();
     @Transient // indique que l'attribut est present dans la classe mais n'est pas present dans la BD
     private Customer customer; // --> n'est pas persistent
-
 }

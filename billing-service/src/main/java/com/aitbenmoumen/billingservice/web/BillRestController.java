@@ -24,6 +24,8 @@ public class BillRestController {
     }
     @GetMapping(path = "/bills/{id}")
     public Bill getBill(@PathVariable Long id){
-        return billRepository.findById(id).get();
+        Bill b = billRepository.findById(id).get();
+        b.setCustomer(customerRestClient.getCustomerById(b.getCustomerId()));
+        return b;
     }
 }
