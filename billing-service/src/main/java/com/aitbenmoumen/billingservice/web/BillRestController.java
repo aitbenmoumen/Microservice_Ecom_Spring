@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class BillRestController {
     @Autowired
@@ -21,10 +23,25 @@ public class BillRestController {
     @Autowired
     private ProductRestClient productRestClient;
 
+    @GetMapping(path = "/bills")
+    public List<Bill> getAllBills(){
+        List<Bill> bills = billRepository.findAll();
+        bills.forEach(bill -> {
+            bill.setCustomer(customerRestClient.getCustomerById(bill.getCustomerId()));
+            bill.getProductItems().forEach(productItem -> {
+                productItem.setProduct(productRestClient.getProductById(productItem.getProductId()));
+            });
+        });
+        return bills;
+    }
+
     @GetMapping(path = "/bills/{id}")
     public Bill getBill(@PathVariable Long id){
-        Bill b = billRepository.findById(id).get();
-        b.setCustomer(customerRestClient.getCustomerById(b.getCustomerId()));
-        return b;
+        Bill bill = billRepository.findById(id).get();
+        bill.setCustomer(customerRestClient.getCustomerById(bill.getCustomerId()));
+        bill.getProductItems().forEach(productItem -> {
+            productItem.setProduct(productRestClient.getProductById(productItem.getProductId()));
+        });
+        return bill;
     }
 }
