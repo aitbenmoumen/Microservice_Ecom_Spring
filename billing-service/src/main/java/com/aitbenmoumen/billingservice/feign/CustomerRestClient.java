@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "customer-service")
 public interface CustomerRestClient {
     @GetMapping("/api/customers/{id}")
-    public Customer getCustomerById(@PathVariable Long id);
+    Customer getCustomerById(@PathVariable Long id);
 
     // --> ça va pas marcher car le retour est un _embedded...
 //    @GetMapping("/api/customers")
 //    public List<Customer> getAllCustomers();
     @GetMapping("/api/customers")
-    public PagedModel<Customer> getAllCustomers();
+    PagedModel<Customer> getAllCustomers();
 
 }
